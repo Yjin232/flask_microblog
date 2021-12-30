@@ -22,11 +22,11 @@ class RegistrationForm(FlaskForm):
 
     #Validation Function
     def validate_username(self,username):
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Username already exists')
     def validate_email(self,email):
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError('Email already exists')
 
