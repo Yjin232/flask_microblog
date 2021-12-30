@@ -1,8 +1,8 @@
 #Author: Yicheng Jin
 #Date: 12/28/2021
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length
 from app.models import User
 
 #登录表单
@@ -31,4 +31,9 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email already exists')
 
 
+#个人页面编辑表单
+class EditProfileForm(FlaskForm):
+    username = StringField('Username',validators=[DataRequired()])
+    about_me = TextAreaField('About me',validators=[Length(min=0,max=140)])
+    submit = SubmitField('Submit')
 
