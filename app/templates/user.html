@@ -1,48 +1,54 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-            <td>
-                <h1>User: {{ user.username }}</h1>
-                {% if user.about_me %}
-                    <p>{{ user.about_me }}</p>
-                {% endif %}
+{% block app_content %}
+	<table class="table table-hover">
+		<tr>
+			<td width="256px"><img src="{{ user.avatar(256) }}"></td>
+			<td>
+				<h1>User:{{ user.username }}</h1>
+				{% if user.about_me %}
+					<p>{{ user.about_me }}</p>
+				{% endif %}
 
-                {% if user.last_seen %}
-                    <p>{{ user.last_seen }}</p>
-                {% endif %}
+				{% if user.last_seen %}
+					<p>Last seen on:{{ user.last_seen }}</p>
+				{% endif %}
 
-                {# show the amount of our followers and followeds #}
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following</p>
+				{% if user == current_user %}
+					<p>
+						<a href="{{ url_for('edit_profile') }}">Edit your profile</a>
+					</p>
 
-                {# 如果当前用户和调用edit_profile视图函数过来的用户一致，则可以进行编辑操作, 如果不是当前用户，则可以进行关注和取消关注操作 #}
-                {% if user == current_user %}
-                    <p>
-                        <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
-                    </p>
-                {% elif not current_user.is_following(user) %}
-                    <p><a href="{{ url_for('follow',username=user.username) }}">Follow</a></p>
-                {% else %}
-                    <p><a href="{{ url_for('unfollow',username=user.username) }}">Unfollow</a></p>
-                {% endif %}
+				{% elif not current_user.is_following(user) %}
+					<p>
+						<a href="{{ url_for('follow', username=user.username) }}">Follow</a>
+					</p>
 
+				{% else %}
+					<p>
+						<a href="{{ url_for('unfollow', username=user.username) }}">Unfollow</a>
+					</p>
+				{% endif %}
+			</td>
+		</tr>
+	</table>
 
+	{% for post in posts %}
+		{% include '_post.html' %}
+	{% endfor%}
 
-            </td>
-        </tr>
-    </table>
-    <br>
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-
-    {% if prev_url %}
-		<a href="{{ prev_url }}">Last page</a>
-	{% endif %}
-	{% if next_url %}
-		<a href="{{ next_url }}">Next page</a>
-	{% endif %}
-
-{% endblock %}
+	<nav aria-label="...">
+		<ul class="pager">
+			<li class="previous{% if not prev_url %} disabled{% endif %}">
+				<a href="{{ prev_url or '#' }}">
+					<span aria-hidden="true">&larr;</span> Newer posts
+				</a>
+			</li>
+			<li class="next{% if not next_url %} disabled{% endif %}">
+				<a href="{{ next_url or '#' }}">
+					Older posts <span aria-hidden="true">&rarr;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+{% endblock%}
