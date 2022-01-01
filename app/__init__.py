@@ -5,6 +5,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_mail import Mail
 
 app = Flask(__name__)
 #this command to relaize all the config
@@ -17,6 +18,8 @@ migrate = Migrate(app,db) # Migrate object
 #init the login object
 login = LoginManager(app)
 login.login_view = 'login'
+
+mail = Mail(app)
 
 #import routes module from app
 from app import routes,models #import routes module from app
