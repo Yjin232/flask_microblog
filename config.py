@@ -24,3 +24,7 @@ class Config:
 
     #config the language
     LANGUAGES = ['en','zh']
+
+    #config the baidu translation api
+    APPID = os.environ.get('APPID')
+    BD_TRANSLATOR_KEY = os.environ.get('BD_TRANSLATOR_KEY')
