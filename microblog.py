@@ -1,6 +1,6 @@
 #Author: Yicheng Jin
 #Date: 12/28/2021
-from app import app, db
+from app import app, db, cli
 from app.models import User, Post
 #shell上下文：进入flask.shell
 @app.shell_context_processor

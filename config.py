@@ -21,3 +21,6 @@ class Config:
     MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL','false').lower() in ['true','on','1']
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+
+    #config the language
+    LANGUAGES = ['en','zh']
