@@ -1,10 +1,32 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, {{ current_user.username }}! Email {{ current_user.email }}</h1>
-    {% for post in posts %}
-        <div><p>{{ post.author.username }} says:<b>{{ post.body }}</b></p></div>
-    {% endfor %}
+	<h1>Hello,{{ current_user.username }}!</h1>
+<!--	index视图函数调用时有form表单，而explore调用时无form表单防止这里崩溃-->
+	{% if form %}
+		<form action="" method="post">
+			{{ form.hidden_tag() }}
+			<p>
+				{{ form.post.label }}<br>
+				{{ form.post(cols=32, rows=4) }}<br>
+				{% for error in form.post.errors %}
+					<span style="color:red;">[{{ error }}]</span>
+				{% endfor %}
+			</p>
+			<p>{{ form.submit() }}</p>
+		</form>
+	{% endif %}
+	{% for post in posts %}
+		<p>
+			{% include '_post.html' %}
+		</p>
+	{% endfor %}
+
+	{% if prev_url %}
+		<a href="{{ prev_url }}">Last page</a>
+	{% endif %}
+	{% if next_url %}
+		<a href="{{ next_url }}">Next page</a>
+	{% endif %}
+
 {% endblock %}
-
-
