@@ -5,4 +5,4 @@ It mainly completes user registration, login, logout, recharge password, blog pu
 
 
 
-Web demo Link: http://120.25.217.202:5000/
+Web demo Link: http://54.213.49.192:5000/
